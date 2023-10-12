@@ -2,14 +2,32 @@ package com.livertas.springecommerce.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="orders")
 public class Order {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String number;
 	private Date creationDate;
 	private Date recivedDate;
 	
 	private double total;
+	
+	@ManyToOne
+	private User user;
+	
+	@OneToOne(mappedBy = "order")
+	private DetailOrder detail;
 
 	public Order() {}
 
@@ -60,6 +78,22 @@ public class Order {
 
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public DetailOrder getDetail() {
+		return detail;
+	}
+
+	public void setDetail(DetailOrder detail) {
+		this.detail = detail;
 	}
 
 	@Override
